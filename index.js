@@ -1,13 +1,20 @@
 'use strict';
 
-function getUserRepos(userInput) {
+function getUserRepos(userInput) {  
   fetch(`https://api.github.com/users/${userInput}/repos`)
-  .then(response => response.json())
-  .then(responseJson => displayResults(responseJson))
-  .catch(error => alert('Something is wrong, try again later!'));
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error(response.statusText);
+  })
+  .then(responseJson => displayResults(responseJson, userInput))
+  .catch(error => {
+    $('#error-message').text(`Something is wrong: ${error.message}`);
+  });
 }
 
-function displayResults(responseJson) {
+function displayResults(responseJson, userInput) {
   console.log(responseJson);
   $('#results').empty();
   $('#results').append(`<h3>${userInput}'s Repos</h3>`)
@@ -22,7 +29,7 @@ function displayResults(responseJson) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    let userInput = $('#user-search').val();
+    const userInput = $('#user-search').val();
     getUserRepos(userInput);
   });
 }
