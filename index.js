@@ -15,9 +15,7 @@ function getUserRepos(userInput) {
 }
 
 function displayResults(responseJson, userInput) {
-  console.log(responseJson);
-  // $('#error-message').html('');
-  // $('#results').html('');
+  console.log(responseJson);  
   $('#results').append(`<h3>${userInput}'s Repos</h3>`)
   for (let i = 0; i < responseJson.length; i++) {
     $('#results').append(
