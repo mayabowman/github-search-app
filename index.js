@@ -16,14 +16,17 @@ function getUserRepos(userInput) {
 
 function displayResults(responseJson, userInput) {
   console.log(responseJson);
-  $('#results').empty();
+  $('#error-message').html('');
+  $('#results').html('');
   $('#results').append(`<h3>${userInput}'s Repos</h3>`)
   for (let i = 0; i < responseJson.length; i++) {
     $('#results').append(
-    `<li>${responseJson[i].name}</li>`
-    `<a href='${responseJson[i].url}'>Link to Repo</a>`  
+      `<li>${responseJson[i].name}
+      <a href='${responseJson[i].url}'>Link to Repo</a>
+      </li>` 
   )};
   $('#results').removeClass('hidden');
+  $('#user-search').val('');
 }
 
 function watchForm() {
